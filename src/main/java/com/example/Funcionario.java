@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.swing.border.EmptyBorder;
+
 public class Funcionario {
 
     private int cdFuncionario;
@@ -64,10 +66,13 @@ public class Funcionario {
         System.out.println("Digite a data de Nascimento (dd/MM/yyyy):");
         String dataNascimentoStr = s.nextLine();
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate dtNascimento = LocalDate.parse(dataNascimentoStr, formatter);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/uuuu");
+        LocalDate dtNascimento = LocalDate.parse(dataNascimentoStr,formatter);
 
-        return new Funcionario(cdFuncionario, nmFuncionario, dtNascimento, salario, depart, "");
+        Funcionario func = new Funcionario(cdFuncionario, nmFuncionario, dtNascimento, salario, depart, "");
+    
+
+        return func;
     }
 
    
@@ -78,18 +83,19 @@ public class Funcionario {
         String passwordDB = "7412369";
 
 
-        String sql = "INSERT INTO funcionarios (cdFuncionario, nmFuncionario, dtNascimento, salario, depart, cargo) " +
-        "VALUES (?, ?, ?, ?, ?, ?";
+        String sql = "INSERT INTO funcionarios (cdFuncionario, nmFuncionario, dtNascimento, salario, depart, cargo) VALUES (" +cdFuncionario+',' 
+        +nmFuncionario + ','+dtNascimento+','+salario+','+depart+','+cargo+")";
+        //"VALUES (?, ?, ?, ?, ?, ?";
 
         try (Connection conn = DriverManager.getConnection(urlDB, userDB, passwordDB);
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setInt(1, cdFuncionario);
-            stmt.setString(2, nmFuncionario);
-            stmt.setDate(3, java.sql.Date.valueOf(dtNascimento));
-            stmt.setDouble(4, salario);
-            stmt.setString(5, depart);
-            stmt.setString(6, cargo);
+            stmt.setInt(0, cdFuncionario);
+            stmt.setString(1, nmFuncionario);
+            stmt.setDate(2, java.sql.Date.valueOf(dtNascimento));
+            stmt.setDouble(3, salario);
+            stmt.setString(4, depart);
+            stmt.setString(5, cargo);
 
             stmt.executeUpdate();
             System.out.println("Funcionário inserido com sucesso no banco de dados.");
@@ -158,8 +164,7 @@ public class Funcionario {
         return dtNascimento;
     }
     public void setDtNascimento(LocalDate dtNascimento) {
-
-        
+       
         this.dtNascimento = dtNascimento;
     }
     public double getSalario() {

@@ -7,8 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 //import javax.naming.spi.DirStateFactory.Result;
 
-public class ModeloConexaoJava 
-{
+public class ModeloConexaoJava {
 
     static void consultaDados (Statement stmConsulta){
         //Statemente é o modo pra colocar informação dentro do banco de dados 
@@ -57,10 +56,8 @@ public class ModeloConexaoJava
    
 
 
-    public static void main( String[] args )
-    {
+    public static void ConectarDB(){
 
-        // aqui já tem o modelo q eu vou usar pra conectar 
       String urlDB = "jdbc:postgresql://localhost:5432/postgres";
       String userDB = "postgres";
       String passwordDB = "7412369";
@@ -73,13 +70,13 @@ public class ModeloConexaoJava
             if (conex !=null ) {
                 //abaixo vai nos mostrar que a conexão foi estabelecida
 
-                System.out.println("prova dos 9 pra logado!!");
+                System.out.println(" logado!!");
                 //abaixo foi criado o Statement pra poder ser usado o metódo consultaDados.
                 //esse metodo consiste em inserir uma query no banco de dado que vai ler num while
                 //todos os objetos daquela tabela  
-                Statement stm = conex.createStatement();
-                colocaDados(stm);// <-chamada do metodo de colocar Dados
-                consultaDados(stm);// <-chamada do metodo de consultar Dados com um loop While
+               // Statement stm = conex.createStatement();
+                //colocaDados(stm);// <-chamada do metodo de colocar Dados
+                //consultaDados(stm);// <-chamada do metodo de consultar Dados com um loop While
             
             } else{
                 System.out.println("conecção falhou :()");
@@ -89,9 +86,7 @@ public class ModeloConexaoJava
             // TODO Auto-generated catch block
             e.printStackTrace();
        }
+    }   
      
-        
-   }
-
-
 }
+        

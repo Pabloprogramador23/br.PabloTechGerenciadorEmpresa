@@ -8,12 +8,16 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-
+        ModeloConexaoJava conexaoJava = new ModeloConexaoJava();
         List<Funcionario> funcionários = new ArrayList<>();
         //List<Empresa> empresas = new ArrayList<>();
         //List<Departamento> departamentos = new ArrayList<>();
         Scanner s = new Scanner(System.in);
+
+
         
+        conexaoJava.ConectarDB();
+
         int continuar;
 
         do {
@@ -47,6 +51,8 @@ public class Main {
                     break;
 
                 case 4:
+
+                
                     Funcionario.consultarFuncionarios();
                     imprimirFuncionarios(funcionários);
                     break;
@@ -79,10 +85,7 @@ public class Main {
         s.close();
     }
 
-    @Override
-    public String toString() {
-        return "Main []";
-    }
+  
 
     private static void imprimirFuncionarios(List<Funcionario> funcionarios) {
 
