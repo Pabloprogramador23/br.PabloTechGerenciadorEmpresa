@@ -94,11 +94,11 @@ public class Funcionario {
              ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
-                int cdFuncionario = rs.getInt("cdFuncionario");
-                String nmFuncionario = rs.getString("nmFuncionario");
-                LocalDate dtNascimento = rs.getDate("dtNascimento").toLocalDate();
+                int cdFuncionario = rs.getInt("cd_Funcionario");
+                String nmFuncionario = rs.getString("nm_Funcionario");
+                LocalDate dtNascimento = rs.getDate("dt_Nascimento").toLocalDate();
                 double salario = rs.getDouble("salario");
-                String depart = rs.getString("depart");
+                String depart = rs.getString("departamento");
                 String cargo = rs.getString("cargo");
 
                 Funcionario funcionario = new Funcionario(cdFuncionario, nmFuncionario, dtNascimento, salario, depart, cargo);
