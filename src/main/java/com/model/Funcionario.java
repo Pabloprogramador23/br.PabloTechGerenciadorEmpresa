@@ -5,14 +5,11 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
-import javax.swing.border.EmptyBorder;
 
 public class Funcionario {
 
@@ -23,33 +20,20 @@ public class Funcionario {
     private String depart;
     private String cargo;
 
-
-
     public Funcionario() {
-        //TODO Auto-generated constructor stub
+        // Construtor vazio
     }
 
-    //CONSTRUTOR PADRÃO
-    public Funcionario (int cdFuncionario, String nmFuncionario,
-    LocalDate dtNascimento, double salario, String depart, String cargo) {
-
-
+    public Funcionario(int cdFuncionario, String nmFuncionario, LocalDate dtNascimento, double salario, String depart, String cargo) {
         this.cdFuncionario = cdFuncionario;
         this.nmFuncionario = nmFuncionario;
         this.dtNascimento = dtNascimento;
         this.salario = salario;
         this.depart = depart;
         this.cargo = cargo;
-
-    
     }
 
-
-    
-
-
-    public  Funcionario criarFuncionario(Scanner s) {
-
+    public static Funcionario criarFuncionario(Scanner s) {
         System.out.println("Digite o código do Funcionário:");
         int cdFuncionario = s.nextInt();
         s.nextLine();
@@ -66,37 +50,28 @@ public class Funcionario {
 
         System.out.println("Digite a data de Nascimento (dd/MM/yyyy):");
         String dataNascimentoStr = s.nextLine();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate dtNascimento = LocalDate.parse(dataNascimentoStr, formatter);
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/uuuu");
-        LocalDate dtNascimento = LocalDate.parse(dataNascimentoStr,formatter);
-
-        Funcionario func = new Funcionario(cdFuncionario, nmFuncionario, dtNascimento, salario, depart, "");
-    
-
-        return func;
+        return new Funcionario(cdFuncionario, nmFuncionario, dtNascimento, salario, depart, "Gerente");
     }
 
-   
     public void salvarFuncionarioBD() {
-
         String urlDB = "jdbc:postgresql://localhost:5432/postgres";
         String userDB = "postgres";
         String passwordDB = "7412369";
 
-
-        String sql = "INSERT INTO public.funcionarios (cdFuncionario, nmFuncionario, dtNascimento, salario, depart, cargo) VALUES (" +cdFuncionario+',' 
-        +nmFuncionario + ','+dtNascimento+','+salario+','+depart+','+cargo+")";
-        //"VALUES (?, ?, ?, ?, ?, ?";
+        String sql = "INSERT INTO funcionarios (cd_funcionario, nm_funcionario, dt_nascimento, salario, departamento, cargo) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = DriverManager.getConnection(urlDB, userDB, passwordDB);
-            PreparedStatement stmt = conn.prepareStatement(sql)) {
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setInt(0, cdFuncionario);
-            stmt.setString(1, nmFuncionario);
-            stmt.setDate(2, java.sql.Date.valueOf(dtNascimento));
-            stmt.setDouble(3, salario);
-            stmt.setString(4, depart);
-            stmt.setString(5, cargo);
+                stmt.setInt(1, cdFuncionario);
+                stmt.setString(2, nmFuncionario);
+                stmt.setDate(3, java.sql.Date.valueOf(dtNascimento));
+                stmt.setDouble(4, salario);
+                stmt.setString(5, depart);
+                stmt.setString(6, cargo);
 
             stmt.executeUpdate();
             System.out.println("Funcionário inserido com sucesso no banco de dados.");
@@ -106,13 +81,15 @@ public class Funcionario {
         }
     }
 
-
-    //CONSULTAR FUNCIONÁRIOS.
     public static List<Funcionario> consultarFuncionarios() {
         List<Funcionario> funcionarios = new ArrayList<>();
+        String urlDB = "jdbc:postgresql://localhost:5432/postgres";
+        String userDB = "postgres";
+        String passwordDB = "7412369";
+
         String sql = "SELECT * FROM funcionarios";
 
-        try (Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/seu_banco_de_dados", "seu_usuario", "sua_senha");
+        try (Connection conn = DriverManager.getConnection(urlDB, userDB, passwordDB);
              PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
 
@@ -134,9 +111,6 @@ public class Funcionario {
         return funcionarios;
     }
 
-
-
-
     public static void imprimirFuncionarios(List<Funcionario> funcionarios) {
         for (Funcionario funcionario : funcionarios) {
             System.out.println("Código: " + funcionario.getCdFuncionario());
@@ -147,45 +121,53 @@ public class Funcionario {
             System.out.println("--------------------------");
         }
     }
-    
 
-    //GETTERS E SETTERS 
+    // Getters e Setters
     public int getCdFuncionario() {
         return cdFuncionario;
     }
+
     public void setCdFuncionario(int cdFuncionario) {
         this.cdFuncionario = cdFuncionario;
     }
+
     public String getNmFuncionario() {
         return nmFuncionario;
     }
+
     public void setNmFuncionario(String nmFuncionario) {
         this.nmFuncionario = nmFuncionario;
     }
+
     public LocalDate getDtNascimento() {
         return dtNascimento;
     }
+
     public void setDtNascimento(LocalDate dtNascimento) {
-       
         this.dtNascimento = dtNascimento;
     }
+
     public double getSalario() {
         return salario;
     }
+
     public void setSalario(double salario) {
         this.salario = salario;
     }
+
     public String getDepart() {
         return depart;
     }
+
     public void setDepart(String depart) {
         this.depart = depart;
     }
+
     public String getCargo() {
         return cargo;
     }
+
     public void setCargo(String cargo) {
         this.cargo = cargo;
     }
-
 }

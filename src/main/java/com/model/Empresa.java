@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 
 
@@ -24,6 +25,25 @@ public class Empresa {
         this.tipoRamos = tipoRamos;
         this.endEmpresa = endEmpresa;
     }
+
+    public static Empresa criarEmpresa(Scanner s) {
+        System.out.println("Digite o código da Empresa:");
+        int code = s.nextInt();
+        s.nextLine();
+
+        System.out.println("Digite o nome da Empresa:");
+        String nmEmpresa = s.nextLine();
+
+        System.out.println("Digite o endereço da Empresa:");
+        String endEmpresa = s.nextLine();
+
+        System.out.println("Digite o ramo da Empresa:");
+        String tipoRamos = s.nextLine();
+
+        return new Empresa(nmEmpresa, code, tipoRamos, endEmpresa);
+    }
+
+
  public void salvarEmpresaBD() {
         String urlDB = "jdbc:postgresql://localhost:5432/postgres";
         String userDB = "postgres";
