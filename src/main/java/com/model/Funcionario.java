@@ -1,10 +1,11 @@
-package com.example;
+package com.model;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -83,12 +84,12 @@ public class Funcionario {
         String passwordDB = "7412369";
 
 
-        String sql = "INSERT INTO funcionarios (cdFuncionario, nmFuncionario, dtNascimento, salario, depart, cargo) VALUES (" +cdFuncionario+',' 
+        String sql = "INSERT INTO public.funcionarios (cdFuncionario, nmFuncionario, dtNascimento, salario, depart, cargo) VALUES (" +cdFuncionario+',' 
         +nmFuncionario + ','+dtNascimento+','+salario+','+depart+','+cargo+")";
         //"VALUES (?, ?, ?, ?, ?, ?";
 
         try (Connection conn = DriverManager.getConnection(urlDB, userDB, passwordDB);
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(0, cdFuncionario);
             stmt.setString(1, nmFuncionario);
@@ -99,6 +100,7 @@ public class Funcionario {
 
             stmt.executeUpdate();
             System.out.println("Funcionário inserido com sucesso no banco de dados.");
+
         } catch (SQLException e) {
             System.out.println("Erro ao tentar inserir funcionário no banco de dados: " + e.getMessage());
         }

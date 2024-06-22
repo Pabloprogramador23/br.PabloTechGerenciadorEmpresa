@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import com.Conexao.ModeloConexaoJava;
+import com.model.Funcionario;
+
 public class Main {
     public static void main(String[] args) {
         ModeloConexaoJava conexaoJava = new ModeloConexaoJava();
@@ -36,7 +39,7 @@ public class Main {
             switch (opcao) {
 
                 case 1:
-                //Funcionario novoFuncionario = criarFuncionario(s);
+                
                 Funcionario novoFuncionario = new Funcionario();
                 novoFuncionario.criarFuncionario(s);
                 novoFuncionario.salvarFuncionarioBD(); // Salva o funcionário no banco de dados
