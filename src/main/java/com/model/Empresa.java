@@ -9,17 +9,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import com.Enumeration.TipoRamos;
+
 
 
 public class Empresa {
     private String nmEmpresa;
     private int code;
-    private String tipoRamos;
+    private TipoRamos tipoRamos;
     private String endEmpresa;
 
     public Empresa(){}
 
-    public Empresa(String nmEmpresa, int code, String tipoRamos, String endEmpresa) {
+    public Empresa(String nmEmpresa, int code, TipoRamos tipoRamos, String endEmpresa) {
         this.nmEmpresa = nmEmpresa;
         this.code = code;
         this.tipoRamos = tipoRamos;
@@ -37,8 +39,11 @@ public class Empresa {
         System.out.println("Digite o endereço da Empresa:");
         String endEmpresa = s.nextLine();
 
-        System.out.println("Digite o ramo da Empresa:");
-        String tipoRamos = s.nextLine();
+        System.out.println("Digite o ramo da Empresa:ALIMENTICIO 1/ ELETRODOMESTICOS 2/ FINANCEIRO 3/ TECNOLOGIA 4");
+        int escolhaRamos = s.nextInt();
+        TipoRamos tipoRamos = TipoRamos.definirTipoRamos(escolhaRamos);
+        
+
 
         return new Empresa(nmEmpresa, code, tipoRamos, endEmpresa);
     }
@@ -57,7 +62,7 @@ public class Empresa {
             stmt.setInt(1, code);
             stmt.setString(2, nmEmpresa);
             stmt.setString(3, endEmpresa);
-            stmt.setString(4, tipoRamos);
+            stmt.setString(4, tipoRamos.name());
 
             stmt.executeUpdate();
             System.out.println("Empresa inserida com sucesso no banco de dados.");
@@ -83,11 +88,19 @@ public static List<Empresa> consultarEmpresas() {
                 int code = rs.getInt("code");
                 String nmEmpresa = rs.getString("nmEmpresa");
                 String endEmpresa = rs.getString("endEmpresa");
-                String tipoRamos = rs.getString("tipoRamos");
-
-                Empresa empresa = new Empresa(nmEmpresa, code, tipoRamos, endEmpresa);
+                String tipo_Ramos = rs.getString("tipoRamos");
+                //esse comando abaixo transforma a String pegue em Enum
+                               
+                     TipoRamos tipoRamos = TipoRamos.valueOf(tipo_Ramos.toUpperCase());
+                     
+               
+                
+                Empresa empresa = new Empresa(nmEmpresa, code, tipoRamos , endEmpresa);
                 empresas.add(empresa);
+                
             }
+
+
         } catch (SQLException e) {
             System.out.println("Erro ao consultar empresas: " + e.getMessage());
         }
@@ -125,12 +138,8 @@ public static List<Empresa> consultarEmpresas() {
         this.code = code;
     }
 
-    public String getTipoRamos() {
+    public TipoRamos getTipoRamos() {
         return tipoRamos;
-    }
-
-    public void setTipoRamos(String tipoRamos) {
-        this.tipoRamos = tipoRamos;
     }
 
     public String getEndEmpresa() {
@@ -140,8 +149,7 @@ public static List<Empresa> consultarEmpresas() {
     public void setEndEmpresa(String endEmpresa) {
         this.endEmpresa = endEmpresa;
     }
-    
-    
-    
+
+
 
 }

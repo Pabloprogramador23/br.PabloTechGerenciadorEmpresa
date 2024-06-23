@@ -3,8 +3,7 @@ package com.model;
 import java.util.List;
 import java.util.Scanner;
 
-public class Main {
-    public static void main(String[] args) {
+public class Main {    public static void main(String[] args) {
         Scanner s = new Scanner(System.in);
         int continuar;
 
