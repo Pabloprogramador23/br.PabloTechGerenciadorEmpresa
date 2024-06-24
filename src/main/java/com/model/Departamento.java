@@ -12,6 +12,9 @@ import java.util.Scanner;
 public class Departamento {
     private int cdDepartamento;
     private String nmDepartamento;
+   // private  Empresa nomeEmpresa; 
+
+    
 
     public Departamento() {
         // Construtor vazio
@@ -104,4 +107,11 @@ public class Departamento {
     public void setNmDepartamento(String nmDepartamento) {
         this.nmDepartamento = nmDepartamento;
     }
+    //public Empresa getNomeEmpresa() {
+       // return nomeEmpresa;
+   // }
+
+   // public void setNomeEmpresa(Empresa nomeEmpresa) {
+   //     this.nomeEmpresa = nomeEmpresa;
+   // }
 }

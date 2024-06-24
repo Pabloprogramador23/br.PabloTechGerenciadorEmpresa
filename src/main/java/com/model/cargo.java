@@ -1,6 +1,6 @@
 package com.model;
 
-public class cargo {
+public class Cargo {
 
 
     private int cdCargo;
